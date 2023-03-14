@@ -1,0 +1,32 @@
+@model List<Product>
+    @{
+        ViewData["Title"] = @Model[0].ProductType.Name;
+    }
+@if (Model == null)
+{
+    <h1 style="color: red;">products loading...</h1>
+}
+else
+{
+    <div class="border-success mt-5 border-5 d-flex flex-row">
+        @foreach (var product in Model)
+        {
+        <div class="card border-success mb-3 mx-1 product-card" style="max-width: 20rem;">
+            <div class="card-header">@product.ProductType.Name</div>
+            <img src="@product.ImgURL" class="m card-img" alt="@product.Name">
+            <div class="card-body">
+                <h4 class="card-title d-flex flex-row">
+                    @product.Name 
+                    <p style="font-size: small;" class="m-auto text-info"> in stock: @product.QISKg kg</p>
+                </h4>
+                <p class="card-text">@product.Description</p>
+            </div>
+            <a asp-controller="Product" asp-action="BuyProduct" asp-route-id="@product.Id">
+                <button class="buy-button bg-success w-50 align-self-end mb-2" style="height: 25px;">
+                    Buy $@product.Price kg
+                </button>
+            </a>
+        </div>
+        }
+    </div>
+}

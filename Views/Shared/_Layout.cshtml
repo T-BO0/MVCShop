@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Shop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Boots.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Shop.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarColor03">
+        <a class="navbar-brand" asp-area="" asp-controller="Product" asp-action="GetProducts">Shop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">Products</a>
+          <div class="dropdown-menu bg-light">
+            <a class="nav-link text-dark dropdown-item" asp-controller="Product" asp-action="GetProducts">All Products</a>
+            <div class=" dropdown-divider"></div>
+              <a class="nav-link text-dark dropdown-item" asp-controller="Category" asp-action="GetProductsByCategoryName" asp-route-categoryName="vegetable">Vegetables</a>
+              <a class="nav-link text-dark dropdown-item" asp-controller="Category" asp-action="GetProductsByCategoryName" asp-route-categoryName="fruit">Fruit</a>
+              <a class="nav-link text-dark dropdown-item" asp-controller="Category" asp-action="GetProductsByCategoryName" asp-route-categoryName="berry">Berry</a>
+              <a class="nav-link text-dark dropdown-item" asp-controller="Category" asp-action="GetProductsByCategoryName" asp-route-categoryName="dairy">dairy</a>
+          </div>
+        </li>
+      </ul>
+      @using (Html.BeginForm("Search","Product",FormMethod.Get))
+      {
+        @Html.TextBox("search",null, null, new {@class=" border-4 border-secodary rounded-3"})
+        <input class=" bg-secondary input me-sm-2" type="submit" value="Search"/>
+      }
+    </div>
+  </div>
+</nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - Shop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

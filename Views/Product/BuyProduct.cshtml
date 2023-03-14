@@ -1,0 +1,70 @@
+@model Product;
+@{
+    ViewData["Title"] = @Model.Name;
+}
+
+@if (Model is null)
+{
+    <h4 style="color:red">product loading ...</h4>
+}
+else
+{
+    <div class="buy-container d-flex flex-row justify-content-between">
+        <div class="card border-success mt-3 mx-1 product-card" style="max-width: 20rem;">
+            <div class="card-header">
+                <a asp-controller="Category" asp-action="GetProductByProductTypeId" asp-route-productTypeId="@Model.ProductTypeId">
+                    @Model.ProductType.Name
+                </a>
+            </div>
+            <img src="@Model.ImgURL" class="m card-img" alt="@Model.Name">
+            <div class="card-body">
+                <h4 class="card-title d-flex flex-row">
+                    @Model.Name 
+                    <p style="font-size: small;" class="m-auto text-info"> in stock: @Model.QISKg kg</p>
+                </h4>
+                <p class="card-text">@Model.Description</p>
+            </div>
+        </div>
+        <div style="width: 400px;">
+            <input value="1" type="number" min="1" max="@Model.QISKg" id="InputNumber" oninput="fu()" class="amount-input mt-3 w-auto" style="height: 40px;" />
+            <label id="NumberLabel" class="mx-2" >Total: $@Model.Price</label>
+            <a onclick="success()" class="btn btn-success mx-2">Buy</a>
+            <h6 class="m-1 success" id="success"></h6>
+        </div>
+    </div>
+}
+
+@section Scripts
+{
+    <script>
+        var elem = document.getElementById('InputNumber');
+        function fu()
+        {
+            var val = elem.value;
+            if(val <= @Model.QISKg && val > 0){
+                document.getElementById('NumberLabel').innerHTML ='Total: $'+(@Model.Price * val).toFixed(2);
+            }
+            else if(val > @Model.QISKg){
+                alert("there is only "+@Model.QISKg+"kg in stock");
+                elem.value = @Model.QISKg;
+            }
+            else if(val < 0){
+                alert("the amount sould be 1 or more");
+                elem.value = 1;
+            }
+        }
+
+
+        function success(){
+            let buy = document.getElementById('success');
+            if(elem.value != 0){
+                buy.innerText = "success, you bought: "+elem.value+"kg @Model.Name";
+                buy.style.visibility = 'visible';
+                elem.value = 0;
+                setTimeout(()=>{
+                    buy.style.visibility = 'hidden';
+                }, 3000);
+            }
+        }
+    </script>
+}

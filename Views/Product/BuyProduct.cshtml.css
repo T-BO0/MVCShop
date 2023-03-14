@@ -1,0 +1,15 @@
+.amount-input{
+    border-radius: 4px;
+    background-color: rgb(70, 3, 70);
+    color: rgb(4, 158, 107);
+    border-width: 3px;
+    border-color: aqua;
+}
+
+.btn-success:hover{
+    background-color: green;
+}
+
+.success{
+    visibility: hidden;
+}
